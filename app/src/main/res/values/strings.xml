@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">XMLApp</string>
+    <string name="title_login">Login</string>
+    <string name="title_button_register">No account? Register here</string>
+    <string name="title_button_login">Login</string>
+    <string name="title_register">Registration</string>
+    <string name="title_button_already_registered">Already registered?</string>
+    <string name="title_button_create_account">Create a new account</string>
+</resources>

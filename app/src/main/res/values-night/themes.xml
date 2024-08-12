@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.XMLApp" parent="Theme.Material3.DayNight.NoActionBar"/>
+
+    <style name="Theme.XMLApp.FullScreen" parent="Base.Theme.XMLApp">
+        <item name="colorPrimaryDark">?colorSurface</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
