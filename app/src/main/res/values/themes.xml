@@ -1,10 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.XMLApp" parent="Theme.Material3.DayNight.NoActionBar"/>
+    <style name="Base.Theme.XMLApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorSurface">@color/alabaster</item>
+    </style>
 
     <style name="Theme.XMLApp.FullScreen" parent="Base.Theme.XMLApp">
         <item name="colorPrimaryDark">?colorSurface</item>
         <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.XMlApp.Splash" parent="Base.Theme.XMLApp">
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.XMLApp.Login" parent="Base.Theme.XMLApp">
+        <item name="colorPrimaryDark">@color/green_gradient_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
 </resources>

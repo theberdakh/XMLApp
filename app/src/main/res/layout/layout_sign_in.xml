@@ -1,36 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutSignIn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <Toolbar
-        android:id="@+id/loginToolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:title="@string/title_login" />
+    android:theme="@style/Theme.XMLApp.Login"
+    android:background="@drawable/shape_bg_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/normal_200"
+        android:background="@drawable/shape_card_24"
         android:orientation="vertical"
-        android:gravity="bottom"
         android:padding="@dimen/normal_100">
 
-        <com.theberdakh.xmlapp.screens.common.widgets.DebounceMaterialButton
-            android:id="@+id/signInButtonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title_button_login" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/logo" />
 
-        <com.theberdakh.xmlapp.screens.common.widgets.DebounceMaterialButton
-            android:id="@+id/signInButtonRegister"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_button_register" />
+            android:layout_marginHorizontal="@dimen/normal_100"
+            android:layout_marginTop="@dimen/normal_100"
+            android:layout_marginBottom="@dimen/small_50"
+            android:gravity="center"
+            android:text="Let’s login to your Account"
+            android:textColor="@color/green_gradient_dark"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_100"
+            android:layout_marginBottom="@dimen/normal_100"
+            android:gravity="center"
+            android:text="Enter your username &amp; password to login"
+            android:textColor="#212529" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_username"
+            android:textColor="@color/gunmetal" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_100"
+            android:background="@drawable/shape_bg_textfield_stroke"
+            android:padding="@dimen/small_100" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textColor="#212529" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/small_100"
+            android:background="@drawable/shape_bg_textfield_stroke"
+            android:padding="@dimen/small_100" />
+
+
+        <FrameLayout
+            android:id="@+id/signInLoginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginVertical="@dimen/normal_100"
+            android:background="@drawable/shape_button_12"
+            android:padding="@dimen/normal_100">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="@font/dm_sans_medium"
+                android:text="@string/title_login"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+        </FrameLayout>
+
 
     </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>

@@ -50,4 +50,10 @@
     <color name="widget_border">#EAECF0</color>
     <color name="widget_primary">#202122</color>
     <color name="widget_placeholder">#72777D</color>
+    <color name="gainsboro_light_gray">#DEE2E6</color>
+    <color name="green_gradient_light">#8CD23C</color>
+    <color name="green_gradient_dark">#417A00</color>
+    <color name="color_stroke_textfield">#CCCCCC</color>
+    <color name="gunmetal">#212529</color>
+    <color name="alabaster">#F6F4F2</color>
 </resources>

@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "XMLApp"
+rootProject.name = "KepKet"
 include ':app'

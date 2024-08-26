@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.theberdakh.xmlapp'
+    namespace 'com.theberdakh.kepket'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.theberdakh.xmlapp"
+        applicationId "com.theberdakh.kepket"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -61,10 +61,10 @@ dependencies {
     // Image loading
     implementation libs.glide
 
-    implementation "androidx.lifecycle:lifecycle-runtime:2.8.4"
-    implementation "androidx.lifecycle:lifecycle-common-java8:2.8.4"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.8.4"
+    implementation libs.androidx.lifecycle.runtime
+    implementation libs.androidx.lifecycle.common.java8
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.lifecycle.livedata.ktx
 
 
 
