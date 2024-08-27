@@ -56,57 +56,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_weight="0.5"
-        android:gravity="center_vertical"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/food_increase"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:padding="@dimen/small_100"
-            android:background="@drawable/bg_rounded_top">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/green_gradient_light"
-                android:background="@drawable/ic_back"/>
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/food_quantity"
-            android:layout_width="32dp"
-            android:layout_height="wrap_content"
-            android:background="#EDF2F6"
-            android:textAlignment="center"
-            android:paddingVertical="@dimen/small_50"
-            android:fontFamily="@font/dm_sans_medium"
-            android:textColor="@color/green_gradient_light"
-            android:text="12" />
-
-        <FrameLayout
-            android:id="@+id/food_decrease"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:padding="@dimen/small_100"
-            android:background="@drawable/bg_rounded_bottom">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/green_gradient_light"
-                android:background="@drawable/ic_back"/>
-
-        </FrameLayout>
-
-
-    </LinearLayout>
 
 
 </LinearLayout>

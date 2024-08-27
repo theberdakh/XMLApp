@@ -4,7 +4,6 @@ import android.view.View
 import com.google.android.material.snackbar.Snackbar
 
 interface SnackbarHelper {
-
     fun showSnackbar(text: String, duration: Int = Snackbar.LENGTH_SHORT)
 }
 

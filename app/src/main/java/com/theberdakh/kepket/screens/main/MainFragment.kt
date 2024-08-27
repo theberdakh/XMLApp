@@ -1,22 +1,33 @@
 package com.theberdakh.kepket.screens.main
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.SearchView.OnQueryTextListener
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.theberdakh.kepket.R
+import com.theberdakh.kepket.common.dialog.MaterialDialogDelegate
+import com.theberdakh.kepket.common.dialog.MaterialDialogHelper
+import com.theberdakh.kepket.common.dialog.MaterialDialogHelperImpl
+import com.theberdakh.kepket.common.snackbar.SnackbarHelper
+import com.theberdakh.kepket.common.snackbar.SnackbarHelperDelegate
+import com.theberdakh.kepket.common.snackbar.SnackbarHelperImpl
 import com.theberdakh.kepket.common.viewbinding.viewBinding
 import com.theberdakh.kepket.databinding.ContainerMainFragmentBinding
 import com.theberdakh.kepket.screens.adapter.FoodAdapter
 import com.theberdakh.kepket.screens.adapter.ParentItemAdapter
+import com.theberdakh.kepket.screens.adapter.TableAdapter
+import com.theberdakh.kepket.screens.adapter.TableNumber
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withFadeAndScale
+import com.theberdakh.kepket.screens.common.animation.ViewAnimations.withFadeIn
+import com.theberdakh.kepket.screens.common.animation.ViewAnimations.withFadeOut
+import com.theberdakh.kepket.screens.common.animation.ViewAnimations.withRotate
 import com.theberdakh.kepket.screens.common.extensions.ViewExtensions.gone
-import com.theberdakh.kepket.screens.common.extensions.ViewExtensions.visible
 import com.theberdakh.kepket.screens.models.Category
 import com.theberdakh.kepket.screens.models.Food
 import com.theberdakh.kepket.screens.models.Header
@@ -33,52 +44,70 @@ class MainFragment : Fragment(R.layout.container_main_fragment) {
     private val binding by viewBinding<ContainerMainFragmentBinding>()
     private val adapter by lazy { ParentItemAdapter() }
     private val orderAdapter by lazy { FoodAdapter() }
+    private val tableAdapter by lazy { TableAdapter() }
     private val layoutManager by lazy { GridLayoutManager(requireContext(), 2) }
-    private var _orderFoods = MutableSharedFlow<List<Food>>()
-    private val orderFoods = _orderFoods.asSharedFlow()
-    private val foods = mutableListOf<Food>()
+    private lateinit var dialogHelper: MaterialDialogDelegate
+    private lateinit var snackbarHelper: SnackbarHelper
 
-    private val fakeData =
-        listOf(
-            Food(3, "Pizza B", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(4, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(5, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(6, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(7, "Pizza 7", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(8, "Pizza 8", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(9, "Pizza 9", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(10, "Pizza 10", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(11, "Pizza 11", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(12, "Pizza 12", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
-            Food(13, "Pizza 13", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(14, "Pizza 14", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(15, "Pizza 15", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-            Food(21, "Pizza 21", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
-        )
+    private val fakeData = listOf(
+        Food(3, "Pizza B", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(4, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(5, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(6, "Pizza B2", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(7, "Pizza 7", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(8, "Pizza 8", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(9, "Pizza 9", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(10, "Pizza 10", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(11, "Pizza 11", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(12, "Pizza 12", Category.BURGER, R.drawable.pizza_margarita, "40.000"),
+        Food(13, "Pizza 13", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(14, "Pizza 14", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(15, "Pizza 15", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+        Food(21, "Pizza 21", Category.PIZZA, R.drawable.pizza_margarita, "40.000"),
+    )
+    private val tables = mutableListOf<TableNumber>()
 
+    private var _selectedFoods = MutableSharedFlow<List<Food>>()
+    private val selectedFoods = _selectedFoods.asSharedFlow()
+    private val selectedFoodsList = mutableListOf<Food>()
+
+    private var _allFoods = MutableSharedFlow<List<ParentItem>>()
+    private val allFoods = _allFoods.asSharedFlow()
+    private val allFoodsList = mutableListOf<ParentItem>()
 
     private val pizza = fakeData.filter { food: Food -> food.category == Category.PIZZA }
     private val burger = fakeData.filter { food: Food -> food.category == Category.BURGER }
     private val drinks = fakeData.filter { food -> food.category == Category.DRINKS }
+
     private val pizzaHeader = Header(id = -1, name = "Pizza")
     private val burgerHeader = Header(id = -2, name = "Burger")
     private val drinkHeader = Header(id = -3, name = "Drinks")
-    private val mix = mutableListOf<ParentItem>()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        dialogHelper =  MaterialDialogDelegate(fragmentActivity = activity ?: requireActivity())
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        snackbarHelper = SnackbarHelperImpl(binding.orderButton)
 
         addHeader(topItemsSize = 0, pizzaHeader)
-        mix.addAll(pizza)
+        allFoodsList.addAll(pizza)
         addHeader(topItemsSize = pizza.size, burgerHeader)
-        mix.addAll(burger)
+        allFoodsList.addAll(burger)
         addHeader(topItemsSize = burger.size, drinkHeader)
-        mix.addAll(drinks)
+        allFoodsList.addAll(drinks)
 
-        implementRecyclerView()
+        repeat(49){
+            tables.add(TableNumber(it+1))
+        }
+        tableAdapter.submitList(tables)
+
+        implementAllFoodsRecyclerView()
         implementBottomSheet()
         implementSortChips()
         implementSearchView()
@@ -86,80 +115,160 @@ class MainFragment : Fragment(R.layout.container_main_fragment) {
     }
 
 
-    private fun implementRecyclerView() {
+    @SuppressLint("NotifyDataSetChanged")
+    private fun implementAllFoodsRecyclerView() {
         binding.mainRecyclerView.adapter = adapter
         binding.mainRecyclerView.layoutManager = layoutManager
-        adapter.submitList(mix)
+        adapter.submitList(allFoodsList)
 
+        allFoods.onEach {
+            adapter.submitList(it)
+            adapter.notifyDataSetChanged()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         adapter.onFoodItemIncreaseClickListener { food ->
             viewLifecycleOwner.lifecycleScope.launch {
-                foods.add(food)
-                _orderFoods.emit(foods)
+                selectedFoodsList.add(food)
+                _selectedFoods.emit(selectedFoodsList)
             }
         }
         adapter.onFoodItemDecreaseClickListener { food ->
             viewLifecycleOwner.lifecycleScope.launch {
-                foods.remove(food)
-                _orderFoods.emit(foods)
+                selectedFoodsList.remove(food)
+                _selectedFoods.emit(selectedFoodsList)
             }
         }
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun implementBottomSheet() {
 
         binding.ordersRecyclerView.adapter = orderAdapter
-
         val bottomSheetBehavior = BottomSheetBehavior.from(binding.sheet).apply {
-            this.isHideable = true
+            this.isHideable = false
             this.isDraggable = true
+            this.skipCollapsed = true
+            this.isFitToContents = true
         }
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        binding.recyclerTables.adapter = tableAdapter
+        binding.recyclerTables.gone()
 
         adapter.onFoodItemAddClickListener { food ->
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-            viewLifecycleOwner.lifecycleScope.launch {
-                foods.add(food)
-                _orderFoods.emit(foods)
-            }
-        }
 
+            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when(newState){
+                        BottomSheetBehavior.STATE_HIDDEN -> {
+                            selectedFoodsList.clear()
+                            for (food in allFoodsList) {
+                                if (food is Food) {
+                                    food.quantity = 0
+                                }
+                            }
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                _allFoods.emit(allFoodsList)
+                                _selectedFoods.emit(selectedFoodsList)
+                            }
+                        }
+                        BottomSheetBehavior.STATE_EXPANDED -> {
+                            Timber.d("Expanded")
+                        }
+                        BottomSheetBehavior.STATE_COLLAPSED -> {
+                            Timber.d("Collapsed")
+                        }
+                        BottomSheetBehavior.STATE_DRAGGING -> {
+                            Timber.d("Dragging")
+                        }
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                            Timber.d("Half expanded")
+                        }
+                        BottomSheetBehavior.STATE_SETTLING -> {
+                            Timber.d("Settling")
+                        }
+                    }
+                }
 
-        binding.ordersRecyclerView.gone()
-        var toggle = false
-        binding.seeButton.setOnClickListener {
-            if (toggle) {
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+                }
+
+            })
+
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
                 binding.ordersRecyclerView.gone()
-                binding.seeIcon.setImageResource(R.drawable.round_menu_open_24)
-                toggle = false
-            } else {
-                binding.ordersRecyclerView.visible()
-                binding.seeIcon.setImageResource(R.drawable.round_close_24)
-                toggle = true
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                selectedFoodsList.add(food)
+                _selectedFoods.emit(selectedFoodsList)
+            }
+        }
+
+        binding.iconClear.setOnClickListener {
+            clearOrder()
+        }
+
+        implementOrdersRecyclerView()
+
+        var shouldShowTables = false
+        binding.orderButton.setOnClickListener {
+            if (shouldShowTables){
+                clearOrder()
+                snackbarHelper.showSnackbar("Order sent successfully!")
+                shouldShowTables = false
+
+            } else {
+                binding.recyclerTables.withFadeIn()
+                shouldShowTables = true
+            }
+
 
         }
 
-        orderFoods.onEach {
-
+        selectedFoods.onEach {
             val orderSummary = calculateOrderSummary(it)
-
             orderAdapter.submitList(orderSummary)
             orderAdapter.notifyDataSetChanged()
             val price = it.sumOf { food -> Integer.parseInt(food.price.replace(".", "")) }
-            binding.price.text = price.toString()
-            if (price == 0) {
-                bottomSheetBehavior.isHideable = true
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-            }
+            binding.price.withFadeAndScale(price.toString())
+
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
+    }
 
+    private fun clearOrder() {
+        tableAdapter.unselectAll()
+        binding.recyclerTables.withFadeOut()
+        selectedFoodsList.clear()
+        for (food in allFoodsList) {
+            if (food is Food) {
+                food.quantity = 0
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            _allFoods.emit(allFoodsList)
+            _selectedFoods.emit(selectedFoodsList)
+        }
+    }
 
+    private fun implementOrdersRecyclerView() {
+        binding.ordersRecyclerView.gone()
+        var toggle = false
 
-        binding.orderButton.setOnClickListener {
+        binding.seeButton.setOnClickListener {
+            if (toggle) {
+                binding.ordersRecyclerView.gone()
+                binding.seeButton.setBackgroundResource(R.drawable.round_open_in_full_24)
+                toggle = false
+            } else {
+                binding.ordersRecyclerView.withFadeIn()
+                binding.seeButton.setBackgroundResource(R.drawable.round_close_fullscreen_24)
+                toggle = true
+            }
         }
     }
 
@@ -234,28 +343,31 @@ class MainFragment : Fragment(R.layout.container_main_fragment) {
     }
 
     private fun searchFood(name: String) {
-        val position = mix.indexOfFirst { it.name.contains(name) }
+        val position = allFoodsList.indexOfFirst { it.name.contains(name) }
         Timber.d("position of $name: $position")
         layoutManager.scrollToPositionWithOffset(position, 0)
 
     }
 
     private fun showTopHeader(header: String) {
-        val position = mix.indexOfFirst { it.parentItem == ParentItem.HEADER && it.name == header }
+        val position = allFoodsList.indexOfFirst { it.parentItem == ParentItem.HEADER && it.name == header }
         layoutManager.scrollToPositionWithOffset(position, 0)
     }
 
     private fun addHeader(topItemsSize: Int, header: Header) {
         if (topItemsSize.isEven() && topItemsSize != 0) {
-            mix.add(header)
-            mix.add(header.copy(name = ""))
+            allFoodsList.add(header)
+            allFoodsList.add(header.copy(name = ""))
         } else if (topItemsSize.isOdd()) {
-            mix.add(header.copy(name = ""))
-            mix.add(header)
-            mix.add(header.copy(name = ""))
+            allFoodsList.add(header.copy(name = ""))
+            allFoodsList.add(header)
+            allFoodsList.add(header.copy(name = ""))
         } else {
-            mix.add(header)
-            mix.add(header.copy(name = ""))
+            allFoodsList.add(header)
+            allFoodsList.add(header.copy(name = ""))
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            _allFoods.emit(allFoodsList)
         }
     }
 

@@ -1,7 +1,9 @@
 package com.theberdakh.kepket.common.dialog
 
+import android.content.DialogInterface
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
@@ -10,6 +12,20 @@ import java.util.Locale
 import java.util.TimeZone
 
 class MaterialDialogHelperImpl(private val fragmentActivity: FragmentActivity): MaterialDialogHelper {
+
+    override fun openAlertDialog(title: String, message: String, positiveButtonText: String, positiveButtonClick: (DialogInterface) -> Unit,
+                        negativeButtonText: String, negativeButtonClick: (DialogInterface) -> Unit) {
+        val dialog = MaterialAlertDialogBuilder(fragmentActivity)
+        dialog.setMessage(message)
+        dialog.setTitle(title)
+        dialog.setPositiveButton(positiveButtonText) { dialogInterface, which ->
+            positiveButtonClick.invoke(dialogInterface)
+        }
+        dialog.setNegativeButton(negativeButtonText){dialogInterface, which ->
+            negativeButtonClick.invoke(dialogInterface)
+        }
+        dialog.show()
+    }
 
     override fun openDataPickerDialog(positiveButtonClick: (String) -> Unit){
         val datePicker = MaterialDatePicker.Builder.datePicker()

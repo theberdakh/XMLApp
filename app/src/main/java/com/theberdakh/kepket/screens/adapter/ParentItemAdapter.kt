@@ -8,6 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.theberdakh.kepket.R
 import com.theberdakh.kepket.databinding.ItemRecyclerFoodAddBinding
 import com.theberdakh.kepket.databinding.ItemRecyclerHeaderBinding
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withBlink
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withBounce
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withFadeAndScale
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withFadeOut
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withScaleAnimation
+import com.theberdakh.kepket.screens.common.animation.TextViewAnimations.withTranslate
 import com.theberdakh.kepket.screens.common.extensions.ViewExtensions.gone
 import com.theberdakh.kepket.screens.common.extensions.ViewExtensions.visible
 import com.theberdakh.kepket.screens.models.Food
@@ -46,7 +52,7 @@ class ParentItemAdapter :
         RecyclerView.ViewHolder(binding.root) {
 
             private fun updateQuantity(food: Food){
-                binding.foodQuantity.text = food.quantity.toString()
+                binding.foodQuantity.withFadeAndScale(food.quantity.toString())
             }
 
         fun bind() {

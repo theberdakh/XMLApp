@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingBottom="150dp"
+        android:paddingBottom="200dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:spanCount="2"
@@ -111,15 +111,38 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <FrameLayout
+
+                android:layout_width="match_parent"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/seeButton"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginTop="@dimen/small_100"
+                    android:layout_marginHorizontal="@dimen/small_100"
+                    android:background="@drawable/round_open_in_full_24"
+                    android:layout_gravity="end"/>
+
+            </FrameLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ordersRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_recycler_food"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
             <LinearLayout
+                android:id="@+id/layoutSum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -145,12 +168,22 @@
                     android:fontFamily="@font/dm_sans_medium"
                     android:padding="@dimen/normal_100"
                     android:paddingHorizontal="@dimen/small_100"
-                    android:textAlignment="center"
+                    android:textAlignment="textEnd"
                     android:textColor="@color/green_gradient_dark"
                     android:textSize="18sp"
+                    android:text="0"
                     tools:text="40.000.000" />
 
             </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerTables"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:spanCount="5"
+                tools:listitem="@layout/item_recycler_table"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
 
 
             <LinearLayout
@@ -160,25 +193,24 @@
                 android:weightSum="5">
 
                 <FrameLayout
-                    android:id="@+id/seeButton"
                     android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/small_100"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/small_100"
                     android:layout_marginVertical="@dimen/normal_100"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_green_stroke"
+                    android:background="@drawable/shape_bg_textfield_stroke"
                     android:clickable="true"
                     android:elevation="6dp"
                     android:focusable="true"
                     android:padding="@dimen/normal_100">
 
                     <ImageView
-                        android:id="@+id/seeIcon"
+                        android:id="@+id/iconClear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/dm_sans_medium"
                         android:gravity="center"
-                        android:src="@drawable/round_menu_open_24"
+                        android:src="@drawable/round_delete_sweep_24"
                         android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
