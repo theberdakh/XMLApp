@@ -8,4 +8,6 @@
     <string name="title_button_create_account">Create a new account</string>
     <string name="title_username">Username</string>
     <string name="hint_search">Search</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

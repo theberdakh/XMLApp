@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.container_main_activity)
 
+
         supportFragmentManager.addFragment(
             R.id.activityContainerView,
             SplashFragment.newInstance(),

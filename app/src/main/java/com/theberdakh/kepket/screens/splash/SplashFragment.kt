@@ -2,6 +2,7 @@ package com.theberdakh.kepket.screens.splash
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.theberdakh.kepket.R
@@ -16,6 +17,10 @@ class SplashFragment : Fragment(R.layout.layout_splash) {
     private val sharedPreferencesStorage by lazy { SharedPreferencesStorage(requireContext()) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
 
         val fragment: Fragment = if (sharedPreferencesStorage.isLoggedIn) {
             MainFragment.newInstance()

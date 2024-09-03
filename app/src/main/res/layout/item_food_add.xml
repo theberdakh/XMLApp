@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small_100"
+    android:padding="@dimen/small_100"
+    android:background="@drawable/shape_card_24"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/pizza_margarita"
+        />
+
+    <TextView
+        android:id="@+id/food_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dm_sans_medium"
+        android:paddingHorizontal="@dimen/small_100"
+        android:textColor="#222222"
+        tools:text="Margarita" />
+
+    <TextView
+        android:id="@+id/food_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dm_sans_medium"
+        android:textColor="@color/color_stroke_textfield"
+        android:paddingHorizontal="@dimen/small_100"
+        tools:text="Pizza" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/food_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:fontFamily="@font/dm_sans_medium"
+            android:paddingHorizontal="@dimen/normal_100"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="28dp"
+            android:textColor="@color/green_gradient_light"
+            tools:text="40.000" />
+
+        <View
+            android:id="@+id/icon_add"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/icon_add"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>

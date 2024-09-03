@@ -4,251 +4,305 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutMain"
     android:layout_width="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent"
     android:background="@color/alabaster"
     android:orientation="vertical">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mainRecyclerView"
+    
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:paddingBottom="200dp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:spanCount="2"
-        tools:itemCount="8"
-        tools:listitem="@layout/item_recycler_food_add" />
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbarlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:liftOnScrollColor="@android:color/transparent">
-
-        <SearchView
-            android:id="@+id/searchView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:searchIcon="@drawable/ic_custom_search"
-            android:layout_margin="@dimen/normal_100"
-            android:background="@drawable/shape_card_24"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@null"
-            android:queryHint="Izlew"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap" />
+            android:clipToPadding="false"
+            android:paddingBottom="200dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:spanCount="2"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_food_with_controls" />
 
-
-        <com.google.android.material.chip.ChipGroup
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/small_50">
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_gradient_dark"
-                android:text="Hámmesi"
-                android:textColor="?colorOnPrimary"
-                app:chipCornerRadius="@dimen/small_150"
-                app:chipStrokeColor="@color/green_gradient_dark" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipBurgers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_gradient_dark"
-                android:text="Burger"
-                android:textColor="?colorOnPrimary"
-                app:chipCornerRadius="@dimen/small_150"
-                app:chipStrokeColor="@color/green_gradient_dark" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipPizza"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_gradient_dark"
-                android:text="Pizza"
-                android:textColor="?colorOnPrimary"
-                app:chipCornerRadius="@dimen/small_150"
-                app:chipStrokeColor="@color/green_gradient_dark"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chipDrinks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/green_gradient_dark"
-                android:text="Drinks"
-                android:textColor="?colorOnPrimary"
-                app:chipCornerRadius="@dimen/small_150"
-                app:chipStrokeColor="@color/green_gradient_dark"/>
-
-
-        </com.google.android.material.chip.ChipGroup>
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/sheet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_bottom_sheet"
-        android:backgroundTint="@color/white"
-        android:clickable="true"
-        android:elevation="5dp"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:padding="@dimen/small_100"
-        app:elevation="5dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <FrameLayout
-
-                android:layout_width="match_parent"
-                android:focusable="true"
-                android:clickable="true"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/seeButton"
-                    android:focusable="true"
-                    android:clickable="true"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_marginTop="@dimen/small_100"
-                    android:layout_marginHorizontal="@dimen/small_100"
-                    android:background="@drawable/round_open_in_full_24"
-                    android:layout_gravity="end"/>
-
-            </FrameLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ordersRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_recycler_food"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
+            android:background="@android:color/transparent"
+            app:liftOnScrollColor="@android:color/transparent">
 
             <LinearLayout
-                android:id="@+id/layoutSum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="10">
 
-                <TextView
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_margin="@dimen/normal_100"
                     android:layout_width="0dp"
+                    android:layout_weight="8"
+                    android:closeIcon="@drawable/round_close_24"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/dm_sans_medium"
-                    android:padding="@dimen/normal_100"
-                    android:paddingHorizontal="@dimen/small_100"
-                    android:text="Summa:"
-                    android:textColor="#222222"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:background="@drawable/shape_card_24"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@null"
+                    android:queryHint="Izlew"
+                    android:searchIcon="@drawable/round_menu_open_24"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap" />
 
-                <TextView
-                    android:id="@+id/price"
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolBar"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/dm_sans_medium"
-                    android:padding="@dimen/normal_100"
-                    android:paddingHorizontal="@dimen/small_100"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/green_gradient_dark"
-                    android:textSize="18sp"
-                    android:text="0"
-                    tools:text="40.000.000" />
+                    android:paddingVertical="@dimen/small_100"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"/>
+
+
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerTables"
+
+
+
+            <com.google.android.material.chip.ChipGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:spanCount="5"
-                tools:listitem="@layout/item_recycler_table"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+                android:padding="@dimen/small_50">
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_gradient_dark"
+                    android:text="Hámmesi"
+                    android:textColor="@color/white"
+                    app:chipCornerRadius="@dimen/small_150"
+                    app:chipStrokeColor="@color/green_gradient_dark" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipBurgers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_gradient_dark"
+                    android:text="Burger"
+                    android:textColor="@color/white"
+                    app:chipCornerRadius="@dimen/small_150"
+                    app:chipStrokeColor="@color/green_gradient_dark" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipPizza"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_gradient_dark"
+                    android:text="Pizza"
+                    android:textColor="@color/white"
+                    app:chipCornerRadius="@dimen/small_150"
+                    app:chipStrokeColor="@color/green_gradient_dark" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipDrinks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green_gradient_dark"
+                    android:text="Drinks"
+                    android:textColor="@color/white"
+                    app:chipCornerRadius="@dimen/small_150"
+                    app:chipStrokeColor="@color/green_gradient_dark" />
+
+
+            </com.google.android.material.chip.ChipGroup>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bottom_sheet"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:elevation="5dp"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="@dimen/small_100"
+            app:elevation="5dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="5">
+                android:orientation="vertical">
+
 
                 <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_marginEnd="@dimen/small_100"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/normal_100"
-                    android:layout_weight="1"
-                    android:background="@drawable/shape_bg_textfield_stroke"
                     android:clickable="true"
-                    android:elevation="6dp"
                     android:focusable="true"
-                    android:padding="@dimen/normal_100">
+                    app:layout_anchor="@+id/mainRecyclerView"
+                    app:layout_anchorGravity="center">
 
-                    <ImageView
-                        android:id="@+id/iconClear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/dm_sans_medium"
-                        android:gravity="center"
-                        android:src="@drawable/round_delete_sweep_24"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
-
+                    <View
+                        android:id="@+id/seeButton"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="end"
+                        android:layout_marginHorizontal="@dimen/small_100"
+                        android:layout_marginTop="@dimen/small_100"
+                        android:background="@drawable/round_open_in_full_24"
+                        android:clickable="true"
+                        android:focusable="true" />
 
                 </FrameLayout>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ordersRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_food_summary" />
 
-                <FrameLayout
-                    android:id="@+id/orderButton"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/layoutSum"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/normal_100"
-                    android:layout_weight="4"
-                    android:background="@drawable/shape_button_12"
-                    android:elevation="6dp"
-                    android:padding="@dimen/normal_100">
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:fontFamily="@font/dm_sans_medium"
-                        android:gravity="center"
-                        android:text="Buyırtpa beriw"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:padding="@dimen/normal_100"
+                        android:paddingHorizontal="@dimen/small_100"
+                        android:text="Summa:"
+                        android:textColor="#222222"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/dm_sans_medium"
+                        android:padding="@dimen/normal_100"
+                        android:paddingHorizontal="@dimen/small_100"
+                        android:text="0"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/green_gradient_dark"
+                        android:textSize="18sp"
+                        tools:text="40.000.000" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerTables"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="5"
+                    tools:listitem="@layout/item_recycler_table" />
 
 
-                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/normal_100"
+                        android:layout_marginEnd="@dimen/small_100"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_bg_textfield_stroke"
+                        android:clickable="true"
+                        android:elevation="6dp"
+                        android:focusable="true"
+                        android:padding="@dimen/normal_100">
+
+                        <ImageView
+                            android:id="@+id/iconClear"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dm_sans_medium"
+                            android:gravity="center"
+                            android:src="@drawable/round_delete_sweep_24"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+
+                    </FrameLayout>
+
+
+                    <FrameLayout
+                        android:id="@+id/orderButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/normal_100"
+                        android:layout_weight="4"
+                        android:background="@drawable/shape_button_12"
+                        android:elevation="6dp"
+                        android:padding="@dimen/normal_100">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dm_sans_medium"
+                            android:gravity="center"
+                            android:text="Buyırtpa beriw"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+
+                    </FrameLayout>
+
+
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
 
-        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
 
-    </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:menu="@menu/menu_search"/>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

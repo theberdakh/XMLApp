@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_round_bottom_right">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Buyırtpa"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:fontFamily="@font/dm_sans_medium"
+            android:textColor="@color/green_gradient_light"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="56dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_round_top_left"
+        android:layout_height="match_parent">
+
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_margin="@dimen/normal_100"
+            android:layout_width="match_parent"
+            android:closeIcon="@drawable/round_close_24"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_card_24"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@null"
+            android:queryHint="Izlew"
+            android:searchIcon="@drawable/ic_custom_search"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap" />
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/small_50">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hámmesi"
+                android:textColor="@color/green_gradient_dark"
+                app:chipCornerRadius="@dimen/normal_100"
+                app:chipStrokeColor="@color/green_gradient_light" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBurgers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Burger"
+                android:textColor="@color/green_gradient_dark"
+                app:chipCornerRadius="@dimen/normal_100"
+                app:chipStrokeColor="@color/green_gradient_light"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPizza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pizza"
+                android:textColor="@color/green_gradient_dark"
+                app:chipCornerRadius="@dimen/normal_100"
+                app:chipStrokeColor="@color/green_gradient_light" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDrinks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drinks"
+                android:textColor="@color/green_gradient_dark"
+                app:chipCornerRadius="@dimen/normal_100"
+                app:chipStrokeColor="@color/green_gradient_light" />
+
+
+        </com.google.android.material.chip.ChipGroup>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/allFoodsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/normal_100"
+            android:layout_marginHorizontal="@dimen/normal_100"
+            tools:listitem="@layout/item_food_add"
+            android:layout_height="wrap_content"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            />
+
+    </LinearLayout>
+
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/allOrdersFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_shopping_cart"
+
+        android:foregroundTint="@color/white"
+        app:tint="@android:color/white"
+        android:layout_margin="@dimen/normal_100"
+        app:borderWidth="1dp"
+        app:backgroundTint="@color/white"
+        android:backgroundTint="@color/green_gradient_light"
+        app:shapeAppearanceOverlay="?attr/shapeAppearanceCornerExtraLarge"
+        android:layout_gravity="bottom|end"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

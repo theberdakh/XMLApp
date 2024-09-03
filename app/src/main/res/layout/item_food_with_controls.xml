@@ -127,6 +127,7 @@
         android:layout_marginBottom="@dimen/small_100"
         android:backgroundTint="@color/green_gradient_dark"
         android:text="Add"
+        android:textColor="@color/white"
         app:cornerRadius="@dimen/normal_100"
         app:icon="@drawable/round_add_24"
         app:iconGravity="textStart" />
